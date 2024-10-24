@@ -1,0 +1,665 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking</title>
+    <style>
+        .bus {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <form id="busForm">
+        <label for="origin">Origin:</label>
+        <input type="text" id="origin" name="origin" required>
+        <br>
+        <label for="destination">Destination:</label>
+        <input type="text" id="destination" name="destination" required>
+        <br>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+        <br>
+        <button type="button" id="searchBuses">Search Buses</button>
+    </form>
+    
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('searchBuses').addEventListener('click', function() {
+            // Get form values
+            const origin = document.getElementById('origin').value;
+            const destination = document.getElementById('destination').value;
+            const date = document.getElementById('date').value;
+
+            // Sample data representing fetched bus results
+            const buses = [
+                { busId: 1, origin, destination, date, seats: 30 },
+                { busId: 2, origin, destination, date, seats: 25 },
+                { busId: 3, origin, destination, date, seats: 40 },
+                { busId: 4, origin, destination, date, seats: 15 },
+                { busId: 5, origin, destination, date, seats: 23 },
+            ];
+
+            // Display results
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';  // Clear previous results
+
+            if (buses.length === 0) {
+                resultsDiv.innerHTML = '<p>No buses found.</p>';
+            } else {
+                buses.forEach(bus => {
+                    const busDiv = document.createElement('div');
+                    busDiv.classList.add('bus');
+                    busDiv.innerHTML = `
+                        <span>${bus.origin} to ${bus.destination}</span>
+                        <br>
+                        <span>Date: ${bus.date}</span>
+                        <br>
+                        <span>Seats Available: ${bus.seats}</span>
+                        <br>
+                        <button onclick="viewSeats(${bus.busId})">View Seats</button>
+                    `;
+                    resultsDiv.appendChild(busDiv);
+                });
+            }
+        });
+
+        function viewSeats(busId) {
+            // Redirect to the seats.html page (you can pass the busId as a query parameter if needed)
+            window.location.href = `seats.html?busId=${busId}`;
+        }
+    </script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 1em;
+        }
+        div {
+            margin-bottom: 1em;
+        }
+        label {
+            margin-bottom: .5em;
+            color: #333333;
+            display: block;
+        }
+        input {
+            border: 1px solid #CCCCCC;
+            padding: .5em;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 0.7em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 0.3em;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .StripeElement {
+            box-sizing: border-box;
+
+            height: 40px;
+
+            padding: 10px 12px;
+
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            -webkit-transition: box-shadow 150ms ease;
+            transition: box-shadow 150ms ease;
+        }
+
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+    </style>
+    // Include Stripe.js 
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Payment Page</h1>
+    <form id="payment-form">
+        <div>
+            <label for="card-element">Credit or Debit Card</label>
+            <div id="card-element">
+                <!-- A Stripe Element will be inserted here. 
+            </div>
+
+//             Used to display form errors.
+            <div id="card-errors" role="alert"></div>
+        </div>
+        <button type="submit">Submit Payment</button>
+    </form>
+
+    <script>
+        // Your Stripe publishable key
+        const stripe = Stripe('YOUR_PUBLISHABLE_KEY');
+
+        // Create an instance of Elements
+        const elements = stripe.elements();
+
+        // Custom styling can be passed to options when creating an Element.
+        // (https://stripe.com/docs/stripe-js/reference#elements-create)
+        const style = {
+            base: {
+                // Add your base input styles here. For example:
+                fontSize: '16px',
+                color: '#32325d',
+            },
+        };
+
+        // Create an instance of the card Element
+        const card = elements.create('card', { style });
+
+        // Add an instance of the card Element into the `card-element` <div>
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element
+        card.addEventListener('change', function(event) {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    // Inform the user if there was an error
+                    const errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Send the token to your server
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        // Submit the token and the rest of your form to your server
+        function stripeTokenHandler(token) {
+            // Insert the token ID into the form so it gets submitted to the server
+            const form = document.getElementById('payment-form');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            // Submit the form
+            form.submit();
+        }
+    </script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 1em;
+        }
+        div {
+            margin-bottom: 1em;
+        }
+        label {
+            margin-bottom: .5em;
+            color: #333333;
+            display: block;
+        }
+        input {
+            border: 1px solid #CCCCCC;
+            padding: .5em;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 0.7em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 0.3em;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .StripeElement {
+            box-sizing: border-box;
+            height: 40px;
+            padding: 10px 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            transition: box-shadow 150ms ease;
+        }
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+    </style>
+    <!-- Include Stripe.js 
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Payment Page</h1>
+    <form id="payment-form">
+        <div>
+            <label for="payment-method">Select Payment Method</label>
+            <select id="payment-method" name="paymentMethod">
+                <option value="card">Credit or Debit Card</option>
+                <option value="upi">UPI</option>
+            </select>
+        </div>
+        <div id="card-element" class="payment-element">
+            <!-- A Stripe Element will be inserted here. 
+        </div>
+        <div id="upi-element" class="payment-element" style="display: none;">
+            <label for="upi-id">UPI ID</label>
+            <input type="text" id="upi-id" name="upiId" placeholder="example@bank">
+        </div>
+        <!-- Used to display form errors. 
+        <div id="card-errors" role="alert"></div>
+        <button type="submit">Submit Payment</button>
+    </form>
+
+    <script>
+        // Your Stripe publishable key
+        const stripe = Stripe('YOUR_PUBLISHABLE_KEY');
+
+        // Create an instance of Elements
+        const elements = stripe.elements();
+
+        // Custom styling can be passed to options when creating an Element.
+        const style = {
+            base: {
+                fontSize: '16px',
+                color: '#32325d',
+            },
+        };
+
+        // Create an instance of the card Element
+        const card = elements.create('card', { style });
+        // Add an instance of the card Element into the `card-element` <div>
+        card.mount('#card-element');
+
+        // Handle payment method selection
+        const paymentMethodSelect = document.getElementById('payment-method');
+        const cardElement = document.getElementById('card-element');
+        const upiElement = document.getElementById('upi-element');
+
+        paymentMethodSelect.addEventListener('change', function(event) {
+            if (event.target.value === 'card') {
+                cardElement.style.display = 'block';
+                upiElement.style.display = 'none';
+            } else if (event.target.value === 'upi') {
+                cardElement.style.display = 'none';
+                upiElement.style.display = 'block';
+            }
+        });
+
+        // Handle real-time validation errors from the card Element
+        card.addEventListener('change', function(event) {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const paymentMethod = paymentMethodSelect.value;
+
+            if (paymentMethod === 'card') {
+                stripe.createToken(card).then(function(result) {
+                    if (result.error) {
+                        // Inform the user if there was an error
+                        const errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server
+                        stripeTokenHandler(result.token);
+                    }
+                });
+            } else if (paymentMethod === 'upi') {
+                const upiId = document.getElementById('upi-id').value;
+                // Process UPI payment (this is a simplified example)
+                alert(`Processing UPI payment for UPI ID: ${upiId}`);
+                // Implement actual UPI payment processing here
+            }
+        });
+
+        // Submit the token and the rest of your form to your server
+        function stripeTokenHandler(token) {
+            // Insert the token ID into the form so it gets submitted to the server
+            const form = document.getElementById('payment-form');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            // Submit the form
+            form.submit();
+        }
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: #007BFF;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .StripeElement {
+            box-sizing: border-box;
+            height: 40px;
+            padding: 10px 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            transition: box-shadow 150ms ease;
+        }
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+        .payment-element {
+            display: none;
+        }
+        .payment-element.active {
+            display: block;
+        }
+        #upi-pay-button {
+            background-color: #28a745;
+        }
+        #upi-pay-button:hover {
+            background-color: #218838;
+        }
+        #netbanking-pay-button {
+            background-color: #6c757d;
+        }
+        #netbanking-pay-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+    <!-- Include Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <form id="payment-form">
+        <h1>Payment Page</h1>
+        <div>
+            <label for="payment-method">Select Payment Method</label>
+            <select id="payment-method" name="paymentMethod">
+                <option value="card">Credit or Debit Card</option>
+                <option value="upi">UPI</option>
+                <option value="netbanking">Internet Banking</option>
+            </select>
+        </div>
+        <div id="card-element" class="payment-element active">
+            <!-- A Stripe Element will be inserted here. -->
+        </div>
+        <div id="upi-element" class="payment-element">
+            <label for="upi-id">UPI ID</label>
+            <input type="text" id="upi-id" name="upiId" placeholder="example@bank">
+            <button type="button" id="upi-pay-button">Pay with UPI</button>
+        </div>
+        <div id="netbanking-element" class="payment-element">
+            <label for="bank-name">Select Your Bank</label>
+            <select id="bank-name" name="bankName">
+                <option value="hdfc">HDFC Bank</option>
+                <option value="icici">ICICI Bank</option>
+                <option value="sbi">State Bank of India</option>
+                <option value="axis">Axis Bank</option>
+                <option value="kotak">Kotak Mahindra Bank</option>
+            </select>
+            <button type="button" id="netbanking-pay-button">Pay with Internet Banking</button>
+        </div>
+        <!-- Used to display form errors. -->
+        <div id="card-errors" role="alert"></div>
+        <button type="submit" id="submit-button">Submit Payment</button>
+    </form>
+
+    <script>
+        // Your Stripe publishable key
+        const stripe = Stripe('YOUR_PUBLISHABLE_KEY');
+
+        // Create an instance of Elements
+        const elements = stripe.elements();
+
+        // Custom styling can be passed to options when creating an Element.
+        const style = {
+            base: {
+                fontSize: '16px',
+                color: '#32325d',
+            },
+        };
+
+        // Create an instance of the card Element
+        const card = elements.create('card', { style });
+        // Add an instance of the card Element into the `card-element` <div>
+        card.mount('#card-element');
+
+        // Handle payment method selection
+        const paymentMethodSelect = document.getElementById('payment-method');
+        const cardElement = document.getElementById('card-element');
+        const upiElement = document.getElementById('upi-element');
+        const netbankingElement = document.getElementById('netbanking-element');
+        const submitButton = document.getElementById('submit-button');
+        const upiPayButton = document.getElementById('upi-pay-button');
+        const netbankingPayButton = document.getElementById('netbanking-pay-button');
+
+        paymentMethodSelect.addEventListener('change', function(event) {
+            cardElement.classList.remove('active');
+            upiElement.classList.remove('active');
+            netbankingElement.classList.remove('active');
+            submitButton.style.display = 'none';
+            
+            if (event.target.value === 'card') {
+                cardElement.classList.add('active');
+                submitButton.style.display = 'block';
+            } else if (event.target.value === 'upi') {
+                upiElement.classList.add('active');
+            } else if (event.target.value === 'netbanking') {
+                netbankingElement.classList.add('active');
+            }
+        });
+
+        // Handle real-time validation errors from the card Element
+        card.addEventListener('change', function(event) {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Handle form submission for card payment
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const paymentMethod = paymentMethodSelect.value;
+
+            if (paymentMethod === 'card') {
+                stripe.createToken(card).then(function(result) {
+                    if (result.error) {
+                        // Inform the user if there was an error
+                        const errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server
+                        stripeTokenHandler(result.token);
+                    }
+                });
+            }
+        });
+
+        // Handle UPI payment
+        upiPayButton.addEventListener('click', function() {
+            const upiId = document.getElementById('upi-id').value;
+            const amount = 999; // Amount in paise (999 paise = 9.99 INR)
+            const upiUrl = `upi://pay?pa=${upiId}&pn=Your%20Name&am=${amount / 100}&cu=INR&tn=Payment%20for%20services`;
+
+            window.location.href = upiUrl;
+        });
+
+        // Handle Internet Banking payment
+        netbankingPayButton.addEventListener('click', function() {
+            const bankName = document.getElementById('bank-name').value;
+            alert(`Redirecting to ${bankName} banking page`);
+            window.location.href()
+            // Redirect logic for internet banking can be added here
+        });
+
+        // Submit the token and the rest of your form to your server
+        function stripeTokenHandler(token) {
+            // Insert the token ID into the form so it gets submitted to the server
+            const form = document.getElementById('payment-form');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            // Submit the form
+            form.submit();
+        }
+    </script>
+</body>
+</html>
+

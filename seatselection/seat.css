@@ -1,0 +1,43 @@
+
+
+/* Seat selection styles */
+
+
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 75px 25px);
+    gap: 9px;
+    margin-top: 20px;
+    width: 30%;
+    background-color: whitesmoke;
+    position: relative;
+    left: 100px;
+}
+.seat {
+    width: 30px;
+    height: 75px;
+    background-color: #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.seat.selected {
+    background-color: #007BFF;
+    color: white;
+}
+
+#selectedSeats {
+    margin-top: 20px;
+}
+
+#selectedSeats ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#selectedSeats ul li {
+    margin-bottom: 10px;
+} 

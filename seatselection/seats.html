@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Selection</title>
+    <link rel="stylesheet" href="">
+    <style>
+        
+
+/* Seat selection styles */
+
+
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 75px 25px);
+    gap: 9px;
+    margin-top: 20px;
+    width: 30%;
+    background-color: none;
+    position: relative;
+    left: 100px;
+}
+.seat {
+    width: 30px;
+    height: 75px;
+    background-color:white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.seat.selected {
+    background-color: #007BFF;
+    color: white;
+}
+
+#selectedSeats {
+    margin-top: 20px;
+}
+
+#selectedSeats ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#selectedSeats ul li {
+    margin-bottom: 10px;
+} 
+.bg{
+    height: 130vh;
+    width: 100%;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../img/bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+.seat-arrangement{
+    height: 90vh;
+    width: 40%;
+    background-color: rgba(228, 104, 27, 0.4);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+}
+.seat-arrangement:hover{
+    box-shadow: 0 0 50px rgb(156, 155, 150);
+    transition: 2s ease-in-out;
+    
+    
+}
+body{
+    margin: 0 0;
+    padding: 0 0;
+}
+button{
+    height: 50px;
+    width: 150px;
+    border-radius: 10px;
+    background-color: blueviolet;
+    color: black;
+    margin-left: 30%;
+}
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+
+    <section class="seat-arrangement">
+        <div class="container">
+            <h1 style="color: white;">Seat Selection</h1>
+            <div id="seatGrid" class="seat-grid">
+                <!-- Seat buttons will be generated here -->
+            </div>
+            <div id="selectedSeats">
+                <h2 style="color: white;">Selected Seats</h2>
+                <ul id="seatList"></ul>
+                <div id="seatGrid"></div>
+                    <ul id="seatList"></ul>
+                    <p id="totalAmount" style="color: white;">Total Amount: ₹0</p>
+
+
+        </div>
+                <button id="confirmButton" >Confirm Selection</button>
+            </div>
+            
+        <script src="seat.js"></script>
+    </section>
+</div>
+</body>
+
+</html>

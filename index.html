@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuZz </title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="msg-btn">
+        <button id="contactButton" class="msg-btn"><i class='bx bx-message-square-minus bx-tada bx-md'
+                style='color:#ffffff'></i>
+        </button>
+    </div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo"><i class='bx bxs-bus bx-tada bx-md'></i> BuZz</a>
+            <ul class="nav-links">
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#offer-section"><i class='bx bxs-offer'></i> Offers</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="search-box">
+                <input type="text" placeholder="Search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#"><i class="fa-solid fa-user-plus"></i> Sign In </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="banner"></section>
+    <section class="banner-img1"></section>
+    <section class="booking-box">
+        <div class="container">
+            <h1>Quick Booking</h1>
+            <form id="searchForm">
+                <input type="text" id="origin" placeholder="Origin" required>
+                <button id="swapButton">
+                    <i class='bx bx-transfer-alt bx-tada'></i>
+                </button>
+                <input type="text" id="destination" placeholder="Destination" required>
+                <input type="date" id="date" required>
+                <button type="submit" class="search-btn">Search Buses</button>
+            </form>
+            <div id="results">
+                <!-- Bus search results will appear here -->
+            </div>
+        </div>
+
+        <!-- Contact Modal -->
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Chat Us</h2>
+                <form id="contactForm">
+                    <input type="text" id="name" placeholder="Your Name" required>
+                    <input type="email" id="email" placeholder="Your Email" required>
+                    <textarea id="message" placeholder="Your Message" required></textarea>
+                    <button type="submit" class="pop-up-btn">Send</button>
+                </form>
+            </div>
+        </div>
+        <div id="results">
+            <!-- Bus search results will appear here -->
+        </div>
+        </div>
+    </section>
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-row">
+                <div class="about-col1">
+                    <h1> About </h1>
+                    <p> BuZz is India’s largest online bus ticketing platform that has transformed bus travel
+                        in the country by bringing ease and convenience to millions of Indians who travel using
+                        buses. Founded in 2011. By providing widest choice, superior customer service, lowest
+                        prices and unmatched benefits, BuZz has served over 11 million customers. </p>
+                </div>
+                <div class="about-col2">
+                    <div class="about-img1">
+                        
+                        <div class="about-icon">
+                            <a href="https://x.com/EDRaj08"><i class='bx bxl-twitter'></i></a>
+                            <a href="https://www.facebook.com/rajraj.edr"><i class='bx bxl-facebook-circle'></i></a>
+                            <a href="https://www.instagram.com/dee__raj__/"><i class='bx bxl-instagram'></i></a>
+                            <a href="https://www.linkedin.com/in/e-d-raj/"><i class='bx bxl-linkedin-square'></i></a>
+                        </div>
+                        <div class="about-content">
+                            <h3>Praveen Kumar S</h3>
+                            <p> Chief Executive Officer </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-col3">
+                    <div class="about-img2">
+                        <div class="about-icon">
+                            <a href="https://x.com/EDRaj08"><i class='bx bxl-twitter'></i></a>
+                            <a href="https://www.facebook.com/rajraj.edr"><i class='bx bxl-facebook-circle'></i></a>
+                            <a href="https://www.instagram.com/dee__raj__/"><i class='bx bxl-instagram'></i></a>
+                            <a href="https://www.linkedin.com/in/e-d-raj/"><i class='bx bxl-linkedin-square'></i></a>
+                        </div>
+                        <div class="about-content">
+                            <h3> Ram </h3>
+                            <p> Product Manager </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-col4">
+                    <div class="about-img3">
+                        <div class="about-icon">
+                            <a href="https://x.com/EDRaj08"><i class='bx bxl-twitter'></i></a>
+                            <a href="https://www.facebook.com/rajraj.edr"><i class='bx bxl-facebook-circle'></i></a>
+                            <a href="https://www.instagram.com/dee__raj__/"><i class='bx bxl-instagram'></i></a>
+                            <a href="https://www.linkedin.com/in/e-d-raj/"><i class='bx bxl-linkedin-square'></i></a>
+                        </div>
+                        <div class="about-content">
+                            <h3>K Sarwan</h3>
+                            <p> CTO </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <section class="offer-section" id="offer-section">
+        <div class="offer-container">
+            <h2 class="offer-title">Special Offers</h2>
+            <div class="offer-row">
+                <div class="offer-card">
+                    <div class="offer-image" style="background-image: url(img/offer.jpg);"></div>
+                    <div class="offer-content">
+                        <h3>SUMMER BONANZA! Get a FREE AC every day! </h3>
+                        <p>Get Coupon on your Next Booking</p>
+                        <button>Get Offer</button>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-image" style="background-image: url(img/offer\ 1);"></div>
+                    <div class="offer-content">
+                        <h3> Flat 10% off via ixigo - AU Bank Credit Card </h3>
+                        <p>ONLY For Round-trip Booking SOON ... ! </p>
+                        <button>Get Offer</button>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-image" style="background-image: url(img/offer\ 2);"></div>
+                    <div class="offer-content">
+                        <h3>Get Upto Rs.200 Cashback with MobiKwik</h3>
+                        <p>Offer's Closing Soon ...!</p>
+                        <button>Get Offer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-row">
+                <div class="contact-col1">
+                    <h1> Contact </h1>
+                    <p> Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit
+                        sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias
+                        ea. Quia fugiat sit in iste officiis commodi quidem hic quas. </p>
+                </div>
+                <div class="contact-col2">
+                    <div class="contact-content">
+                        <div class="contact-icon"><i class='bx bxs-map'></i></div>
+                        <h3> Our Address </h3>
+                        <p> A108 Adam Street,
+                            New York,
+                            NY 535022 </p>
+                    </div>
+                </div>
+                <div class="contact-col3">
+                    <div class="contact-content">
+                        <div class="contact-icon"><i class='bx bx-envelope'></i></div>
+                        <h3> Email </h3>
+                        <p> info@example.com
+                            contact@example.com </p>
+                    </div>
+                </div>
+                <div class="contact-col4">
+                    <div class="contact-content">
+                        <div class="contact-icon"><i class='bx bx-phone-call'></i></div>
+                        <h3> Contact </h3>
+                        <p> +91 63808 52380 <br>
+                            +91 95143 41438 </p>
+                                                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div id='root'></div>
+    </section>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

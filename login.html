@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('./lo.jpg');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+        }
+
+        .login-container, .welcome-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+            
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        p a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="login-container bgg" id="login-container">
+        <h1>Welcome to TravelX</h1>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" id="sub">Login</button>
+        </form>
+        <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+
+    <div class="welcome-container" id="welcome-container" style="display: none;">
+        <h1>Welcome, <span id="user-name"></span>!</h1>
+        <button id="logout">Logout</button>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'admin' && password === 'admin') {
+                window.location.href = 'index.html';
+            } else {
+                alert('Login failed');
+            }
+        });
+
+        document.getElementById('logout').addEventListener('click', function() {
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('welcome-container').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
